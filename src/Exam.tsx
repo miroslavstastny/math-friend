@@ -16,8 +16,10 @@ export const Exam: React.FunctionComponent<{
   const [question, setQuestion] = React.useState(nextQuestion())
   const [stats, setStats] = React.useState({ correct: 0, wrong: 0 })
 
-  const handleInput = React.useCallback(
-    (e, answer: string) => {
+  const handleInput = React.useCallback<
+    Required<React.ComponentProps<typeof Input>>['onSubmit']
+  >(
+    (_, answer) => {
       if (answer === question.answer) {
         setQuestion(nextQuestion())
         setStats({ ...stats, correct: stats.correct + 1 })
