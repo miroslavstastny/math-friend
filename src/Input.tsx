@@ -1,4 +1,5 @@
 import React from 'react'
+import './Input.css'
 
 export const Input: React.FunctionComponent<
   Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onSubmit'> & {
@@ -23,7 +24,7 @@ export const Input: React.FunctionComponent<
 
   return (
     <form onSubmit={handleSubmit}>
-      <input ref={inputRef} {...rest} />
+      <input id="input" ref={inputRef} {...rest} autoComplete="off" />
     </form>
   )
 }
