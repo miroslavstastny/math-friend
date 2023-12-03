@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 
 import { Exam } from './Exam'
+import { VersionInfo } from './VersionInfo'
 
 function App() {
   const [lastResult, setLastResult] = React.useState<{
@@ -19,7 +20,7 @@ function App() {
       )}
       {fsm === 'running' && (
         <Exam
-          totalSec={10}
+          totalSec={5 * 60}
           onComplete={(stats) => {
             setLastResult(stats)
             setFsm('done')
@@ -37,6 +38,7 @@ function App() {
           <button onClick={() => setFsm('running')}>Play again!</button>
         </div>
       )}
+      <VersionInfo />
     </>
   )
 }
