@@ -1,33 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { Exam } from './Exam'
 
+function App() {
+  const [lastResult, setLastResult] = React.useState<{
+    correct: number
+    wrong: number
+  }>({ correct: 0, wrong: 0 })
+  const [fsm, setFsm] = React.useState<'new' | 'running' | 'done'>('new')
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Math Friend</h1>
+      {fsm === 'new' && (
+        <div>
+          <button onClick={() => setFsm('running')}>start</button>
+        </div>
+      )}
+      {fsm === 'running' && (
+        <Exam
+          totalSec={10}
+          onComplete={(stats) => {
+            setLastResult(stats)
+            setFsm('done')
+          }}
+        />
+      )}
+
+      {fsm === 'done' && (
+        <div>
+          <h2>Done!</h2>
+          <p>
+            {lastResult?.correct} of {lastResult?.correct + lastResult?.wrong}{' '}
+            correct
+          </p>
+          <button onClick={() => setFsm('running')}>Play again!</button>
+        </div>
+      )}
     </>
   )
 }
